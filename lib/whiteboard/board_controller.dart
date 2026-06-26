@@ -104,7 +104,6 @@ class BoardController extends ChangeNotifier {
   void centerIfPending(Node node, Size size) {
     final center = _pendingCenter.remove(node.id);
     if (center == null) return;
-    
     node.position = center - Offset(size.width / 2, size.height / 2);
     notifyListeners();
   }
