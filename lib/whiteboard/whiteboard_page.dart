@@ -255,7 +255,6 @@ class _WhiteboardPageState extends State<WhiteboardPage> {
             key: ValueKey(n.id),
             node: n,
             selected: selected,
-            scale: _scale,
             controller: _controller,
           ),
         _ => const SizedBox.shrink(),
@@ -460,13 +459,11 @@ class _NodeCard extends StatefulWidget {
     super.key,
     required this.node,
     required this.selected,
-    required this.scale,
     required this.controller,
   });
 
   final Node node;
   final bool selected;
-  final double scale;
   final BoardController controller;
 
   @override
@@ -521,7 +518,6 @@ class _NodeCardState extends State<_NodeCard> {
     final node = widget.node;
     final controller = widget.controller;
     final selected = widget.selected;
-    final scale = widget.scale;
     final model = node.model;
     final name = model.name.trim().isEmpty ? 'Untitled' : model.name;
     final card = GestureDetector(
@@ -529,7 +525,10 @@ class _NodeCardState extends State<_NodeCard> {
       onTapDown: (_) => controller.select(node.id),
       onDoubleTap: () => controller.openProperties(node.id),
       onSecondaryTapDown: (d) => _showContextMenu(context, d.globalPosition),
-      onPanUpdate: (d) => controller.moveItem(node, d.delta / scale),
+      // The gesture detector lives inside the InteractiveViewer's transformed
+      // child, so `delta` is already in board (scene) coordinates. Use it
+      // directly so the card tracks the cursor at any zoom level.
+      onPanUpdate: (d) => controller.moveItem(node, d.delta),
       child: Container(
         key: _cardKey,
         constraints: const BoxConstraints(minWidth: 160, maxWidth: 280),
