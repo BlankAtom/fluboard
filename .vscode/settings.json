@@ -1,0 +1,4 @@
+{
+  // Save files with Windows (CRLF) line endings by default.
+  "files.eol": "\r\n"
+}
