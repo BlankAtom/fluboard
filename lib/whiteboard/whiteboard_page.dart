@@ -273,7 +273,6 @@ class _WhiteboardPageState extends State<WhiteboardPage> {
         key: ValueKey(node.id),
         node: node,
         selected: _controller.selectedId == node.id,
-        scale: _scale,
         controller: _controller,
       ),
     );

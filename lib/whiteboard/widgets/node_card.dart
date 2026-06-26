@@ -12,13 +12,11 @@ class NodeCard extends StatefulWidget {
     super.key,
     required this.node,
     required this.selected,
-    required this.scale,
     required this.controller,
   });
 
   final Node node;
   final bool selected;
-  final double scale;
   final BoardController controller;
 
   @override
@@ -74,7 +72,7 @@ class _NodeCardState extends State<NodeCard> {
       onTapDown: (_) => _controller.select(_node.id),
       onDoubleTap: () => _controller.openProperties(_node.id),
       onSecondaryTapDown: (d) => _showContextMenu(d.globalPosition),
-      onPanUpdate: (d) => _controller.moveItem(_node, d.delta / widget.scale),
+      onPanUpdate: (d) => _controller.moveItem(_node, d.delta),
       child: _NodeCardBody(
         cardKey: _cardKey,
         model: _node.model,
