@@ -9,6 +9,11 @@ import 'board_painters.dart';
 /// "infinite" while keeping coordinates positive and finite.
 const double _kCanvasSize = 100000;
 
+/// How much a mouse-wheel notch changes the zoom. This is
+/// [InteractiveViewer.scaleFactor]; the Flutter default is 200. A *larger*
+/// value means a *smaller* zoom step per wheel notch.
+const double _kWheelScaleFactor = 800;
+
 /// Preset colors offered in the toolbar.
 const List<Color> _kPalette = <Color>[
   Colors.black,
@@ -202,6 +207,7 @@ class _WhiteboardPageState extends State<WhiteboardPage> {
                   constrained: false,
                   minScale: 0.2,
                   maxScale: 6,
+                  scaleFactor: _kWheelScaleFactor,
                   panEnabled: interactive,
                   scaleEnabled: interactive,
                   boundaryMargin: const EdgeInsets.all(double.infinity),
